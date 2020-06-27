@@ -1,4 +1,4 @@
-// const Promise = require('./promise');
+const Promise = require('./promise');
 const fs = require('fs');
 
 // catch其实是.then(null, err=>{...})
@@ -31,3 +31,32 @@ Promise.defer = function () {
   });
   return defer;
 };
+
+
+// 输出打印结果
+Promise.resolve().then(res => {
+  console.log(1);
+  return Promise.resolve().then(() => {
+    console.log(11);
+  }).then(() => {
+    console.log(22);
+  }).then(() => {
+    console.log(33);
+    return 33;
+  })
+}).then((res) => {
+  console.log(2, res);
+}).then(() => {
+  console.log(3);
+});
+
+
+
+/*
+* 1
+* 11
+* 22
+* 33
+* 2 33
+* 3
+* */
