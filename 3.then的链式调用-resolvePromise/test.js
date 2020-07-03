@@ -62,7 +62,7 @@ p2.then(res => {
 let pp2 = p1.then(res => {
   return new Promise((resolve, reject) => {
     return new Promise((resolve, reject) => {
-      resolve('嵌套的promise');
+      resolve('嵌套的promise'); // 此处的resolve是离他最近的那个Promise的resolve
     });
   });
 });

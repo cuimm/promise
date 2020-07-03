@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+    Promise.resolve().then(() => {
+        console.log('Promise1')
+        setTimeout(() => {
+            console.log('setTimeout2')
+        }, 0);
+    })
+    setTimeout(() => {
+        console.log('setTimeout1');
+        Promise.resolve().then(() => {
+            console.log('Promise2')
+        })
+    }, 0);
+
+    // 1、代码从上到下执行，将promise1加入微任务队列，将setTimeout1加入宏任务队列，主线程代码执行完毕。此时：微任务队列[promise1] 宏任务队列[setTimeout1]
+    // 2、清空微任务队列：输出：Promise1，然后将setTimeout2（没有等待时间）加入宏任务队列，此时微任务队列：[]，宏任务队列：[setTimeout1, setTimeout2]
+    // 3、拿出第一个宏任务setTimeout1，输出：setTimeout1，然后将Promise2加入微任务队列，此时微任务队列：[Promise2]，宏任务队列：[setTimeout2]
+    // 4、再拿出一个宏任务setTimeout2，输出：setTimeout2，此时微任务队列和宏任务队列都清空了
+</script>
+</body>
+</html>

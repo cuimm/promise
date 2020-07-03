@@ -1,0 +1,35 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<button id="button">按钮</button>
+<script>
+    button.addEventListener('click', () => {
+        console.log('listener1');
+        Promise.resolve().then(() => console.log('micro task1'))
+    })
+    button.addEventListener('click', () => {
+        console.log('listener2');
+        Promise.resolve().then(() => console.log('micro task2'))
+    });
+    button.click(); // click1() click2()
+
+    // button.click() 是由主线程触发的，不是用户点击触发的，相当于执行了click1()click2() 2个方法，
+    // listener1
+    // listener2
+    // micro task1
+    // micro task2
+
+    // 用户点击相当于是执行2个宏任务
+    // listener1
+    // micro task1
+    // listener2
+    // micro task2
+</script>
+</body>
+</html>
