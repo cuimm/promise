@@ -189,7 +189,7 @@ class Promise {
       };
       for (let i = 0; i < promises.length; i++) {
         let value = promises[i];
-        if (isPromise(val)) {
+        if (isPromise(value)) {
           value.then(y => {
             processData(i, y);
           }, reject);
